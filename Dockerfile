@@ -9,13 +9,9 @@ WORKDIR /app
 COPY requirements.txt .
 
 
-RUN pip install --no-cache-dir -r requirements.txt
-
 # Copy the rest of the application's code into the container at /app
 COPY . .
 
-
-RUN python preprocessing/aokvqa.py
 
 # Make port 80 available to the world outside this container
 # (if the application is a web service)
