@@ -1,0 +1,13 @@
+# Directories
+data/
+logs/
+checkpoints/
+__pycache__/
+.git/
+.vscode/
+
+# Files
+run.ipynb
+*.pyc
+Dockerfile
+.dockerignore

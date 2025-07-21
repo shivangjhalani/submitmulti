@@ -1,0 +1,52 @@
+# CoCoNut Multi-Stage Training
+
+# Training Configuration
+mode: "coconut_train"
+name: "aokvqa-coconut-multistage"
+run_name: "aokvqa-coconut-multistage"
+output_dir: "checkpoints/aokvqa_coconut"
+limit_for_testing: true
+num_epochs: 24
+reset_optimizer: true
+resume_from_checkpoint: false
+weight_decay: 0.01
+warmup_steps: 500
+max_grad_norm: 1.0
+lr_scheduler_type: "cosine"
+load_best_model_at_end: true
+metric_for_best_model: "accuracy"
+
+
+# Evaluation Strategy (uncomment to skip evaluations during training)
+# skip_eval_during_training: true  # Set to true to skip all evaluations between epochs
+# load_best_model_at_end: false    # Should be false when skipping evaluations
+
+# Generation Configuration
+generation:
+  do_sample: true
+  max_new_tokens: 256
+  num_beams: 1
+  temperature: 0.8
+  top_p: 0.9
+  top_k: 50
+
+# Model Configuration
+load_model_path: "checkpoints/aokvqa_cot_aokvqa-cot-stage0/epoch-8"
+
+# Logging Configuration
+use_wandb: false
+
+# CoCoNut Configuration
+coconut:
+  c_thought: 2
+  enabled: true
+  epochs_per_stage: 3
+  max_latent_stage: 6
+  pad_latent_to_max: false
+  uniform_prob: 0.0
+
+# Evaluation Configuration
+eval_config:
+  coconut: true
+  cot: false
+  log_per_sample: true

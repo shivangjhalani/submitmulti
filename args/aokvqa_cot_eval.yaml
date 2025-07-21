@@ -1,0 +1,26 @@
+# CoT Evaluation Only
+
+# Training Configuration
+mode: "eval_only"
+name: "aokvqa-cot-eval"
+run_name: "aokvqa-cot-eval"
+eval_batch_size: 32
+eval_accumulation_steps: 2
+limit_for_testing: true
+
+# Generation Configuration
+generation:
+  do_sample: false
+  max_new_tokens: 256
+  num_beams: 3
+  top_p: 1.0
+  top_k: 50
+
+# Model Configuration
+load_model_path: "checkpoints/aokvqa_cot_aokvqa-cot-stage0/epoch-8"
+
+# Evaluation Configuration
+eval_config:
+  coconut: false
+  cot: true
+  log_per_sample: true

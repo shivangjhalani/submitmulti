@@ -1,0 +1,26 @@
+# Vanilla Evaluation Only
+
+# Training Configuration
+mode: "eval_only"
+name: "aokvqa-vanilla-eval"
+run_name: "aokvqa-vanilla-eval"
+dataloader_num_workers: 0
+eval_accumulation_steps: 1
+eval_batch_size: 32
+limit_for_testing: true
+
+# Generation Configuration
+generation:
+  do_sample: false
+  max_new_tokens: 128
+  num_beams: 3
+  top_p: 1.0
+  top_k: 50
+
+# Evaluation Configuration
+eval_config:
+  coconut: false
+  cot: false
+  vanilla: true
+  log_per_sample: true
+  log_latency: true  # Track generation latency for performance analysis

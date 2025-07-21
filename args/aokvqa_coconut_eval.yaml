@@ -1,0 +1,34 @@
+# CoCoNut Evaluation Only
+
+# Training Configuration
+mode: "eval_only"
+name: "aokvqa-coconut-evaluation"
+run_name: "aokvqa-coconut-evaluation"
+eval_accumulation_steps: 2
+eval_batch_size: 16
+limit_for_testing: true
+
+# Generation Configuration
+generation:
+  do_sample: false
+  max_new_tokens: 256
+  num_beams: 3
+  top_p: 1.0
+  top_k: 50
+
+# Model Configuration
+load_model_path: "checkpoints/aokvqa_coconut"
+
+# CoCoNut Configuration
+coconut:
+  c_thought: 1
+  enabled: true
+  max_latent_stage: 6
+
+# Evaluation Configuration
+eval_config:
+  coconut: true
+  cot: false
+  detailed_logging: true
+  eval_latent_tokens: 4
+  log_per_sample: true

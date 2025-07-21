@@ -1,0 +1,35 @@
+# Stage 0: Chain-of-Thought Training
+
+# Training Configuration
+mode: "cot_train"
+name: "aokvqa-cot-stage0"
+run_name: "aokvqa-cot-stage0"
+output_dir: "checkpoints/aokvqa_cot"
+batch_size: 16
+eval_batch_size: 64
+eval_accumulation_steps: 1
+num_epochs: 8
+weight_decay: 0.01
+warmup_steps: 500
+max_grad_norm: 1.0
+lr_scheduler_type: "cosine"
+metric_for_best_model: "accuracy"
+
+# Evaluation Strategy (set to true to skip evaluations during training)
+skip_eval_during_training: false  # Set to true to skip all evaluations between epochs
+load_best_model_at_end: true    # Should be false when skipping evaluations
+
+# Generation Configuration
+generation:
+  do_sample: true
+  max_new_tokens: 256
+  num_beams: 1
+  temperature: 1.0
+  top_p: 0.9
+  top_k: 50
+
+# Evaluation Configuration
+eval_config:
+  coconut: false
+  cot: true
+  log_per_sample: true

@@ -1,0 +1,95 @@
+# Complete Configuration Template for MultiCoCo
+
+# Project Configuration
+debug: false
+project: "multicoco"
+seed: 42
+
+# Training Configuration  
+mode: "cot_train"
+name: "my-experiment"
+run_name: "my-experiment-run"
+output_dir: "checkpoints/my_experiment"
+batch_size: 8
+eval_batch_size: 16
+gradient_accumulation_steps: 2
+eval_accumulation_steps: 1
+learning_rate: 1.0e-5
+num_epochs: 10
+limit_for_testing: false
+resume_from_checkpoint: true
+weight_decay: 0.01
+warmup_steps: 500
+logging_steps: 10
+save_steps: 1000
+eval_steps: 1000
+eval_strategy: "epoch"             # Options: "epoch", "steps", "no"
+save_strategy: "epoch"             # Options: "epoch", "steps", "no"
+skip_eval_during_training: false  # Set to true to skip all evaluations between epochs
+save_total_limit: 2
+max_checkpoints_to_keep: 3
+keep_best_checkpoints: true
+use_run_name_in_output_dir: true
+load_best_model_at_end: true
+metric_for_best_model: "accuracy"
+greater_is_better: false
+
+# Generation Configuration
+generation:
+  do_sample: true
+  max_new_tokens: 256
+  num_beams: 1
+  temperature: 0.7
+  top_p: 0.9
+  top_k: 50
+
+# Model Configuration
+bf16: true
+fp16: false
+model_name: "OpenGVLab/InternVL3-1B-Pretrained"
+config_id: null
+tokenizer_id: null
+image_processor_id: null
+torch_dtype: "bfloat16"
+trust_remote_code: true
+low_cpu_mem_usage: true
+load_model_path: null
+torch_compile: false
+use_flash_attention_2: false
+gradient_checkpointing: true
+dataloader_pin_memory: false
+dataloader_num_workers: 4
+
+# Data Configuration
+data_dir: "data/"
+train_data_path: "data/aokvqa_train.json"
+eval_data_path: "data/aokvqa_validation.json"
+
+# Logging Configuration
+console_output: true
+log_dir: "logs/"
+log_level: "INFO"
+verbose: false
+use_wandb: true
+run_name: "my-experiment-run"
+log_to_file: true
+project: "multicoco"
+
+# CoCoNut Configuration
+coconut:
+  enabled: false
+  c_thought: 1
+  max_latent_stage: 6
+  epochs_per_stage: 1
+  uniform_prob: 0.0
+  pad_latent_to_max: false
+  reset_optimizer: true
+
+# Evaluation Configuration
+eval_config:
+  vanilla: true
+  cot: false
+  coconut: false
+  eval_latent_tokens: null
+  log_per_sample: true
+  detailed_logging: false
