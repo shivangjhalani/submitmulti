@@ -1,7 +1,6 @@
 # Directories
 data/
 logs/
-checkpoints/
 __pycache__/
 .git/
 .vscode/
@@ -9,5 +8,4 @@ __pycache__/
 # Files
 run.ipynb
 *.pyc
-Dockerfile
 .dockerignore

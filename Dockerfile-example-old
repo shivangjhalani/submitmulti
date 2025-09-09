@@ -1,0 +1,17 @@
+# Use an official PyTorch image as a parent image.
+# Using a version with CUDA and CUDNN support, as this is a deep learning project.
+FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the requirements file into the container at /app
+COPY requirements.txt .
+
+
+# Copy the rest of the application's code into the container at /app
+COPY . .
+
+
+# Define the command to run the application.
+CMD ["torchrun", "--nnodes", "1", "--nproc_per_node", "1", "run.py", "args/aokvqa_cot_eval.yaml"]

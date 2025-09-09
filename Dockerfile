@@ -1,22 +1,22 @@
-# Use an official PyTorch image as a parent image.
-# Using a version with CUDA and CUDNN support, as this is a deep learning project.
-FROM pytorch/pytorch:2.0.1-cuda11.7-cudnn8-runtime
+# 1. Base Image
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
 
-# Set the working directory in the container
+# 2. Set working directory
 WORKDIR /app
 
-# Copy the requirements file into the container at /app
+# 3. Copy requirements and install dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt pyyaml
 
-
-# Copy the rest of the application's code into the container at /app
+# 4. Copy the rest of the application
 COPY . .
 
+# 5. Create checkpoints directory and download model checkpoint
+RUN mkdir -p checkpoints && \
+    python -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='ThefirstM/checkpoints', repo_type='dataset', local_dir='checkpoints', allow_patterns=['aokvqa_cot_aokvqa-cot-stage0/epoch-8/**'])"
 
-# Make port 80 available to the world outside this container
-# (if the application is a web service)
-# EXPOSE 80
+# 6. Run preprocessing
+RUN python preprocessing/aokvqa.py
 
-# Define the command to run the application.
-# This is an example from the README. The user can override this when running the container.
-CMD ["torchrun", "--nnodes", "1", "--nproc_per_node", "1", "run.py", "args/aokvqa_vanilla_eval.yaml"]
+# 7. Set the default command to run evaluation and display logs
+CMD ["sh", "-c", "torchrun --nnodes 1 --nproc_per_node 1 run.py args/aokvqa_cot_eval.yaml && cat $(ls -td logs/aokvqa-cot-eval_* | head -n 1)/evaluation.log"]
