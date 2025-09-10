@@ -1,3 +1,13 @@
+```
+Install toolkit
+sudo apt-get update
+sudo apt-get install -y nvidia-container-toolkit
+
+Configure runtime for Docker and restart
+sudo nvidia-ctk runtime configure --runtime=docker
+sudo systemctl restart docker
+```
+
 # MultiCoCo: Multimodal Chain-of-Continuous-Thought
 
 MultiCoCo is a comprehensive training framework that extends the original [CoCoNut (Chain-of-Continuous-Thought)](https://arxiv.org/abs/2412.06769) methodology to multimodal models, specifically InternVL3-1B for Visual Question Answering.
@@ -68,7 +78,7 @@ generation:
   num_beams: 1          # Single beam for efficiency
 ```
 
-### CoCoNut Latent Reasoning Evaluation  
+### CoCoNut Latent Reasoning Evaluation
 ```yaml
 generation:
   max_new_tokens: 256    # Allow sufficient answer generation
